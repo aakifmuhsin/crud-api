@@ -1,0 +1,11 @@
+.plate {
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 477.92px;
+    height: 40.5px;
+    left: calc(50% - 477.92px/2 - 558.54px);
+    bottom: 0px;
+    /* background: url(.png); */
+    border-bottom: 1px solid #111111;
+}

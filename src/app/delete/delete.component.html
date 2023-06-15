@@ -1,0 +1,12 @@
+<div>
+    <h1 class="position-absolute top-0 start-50 translate-middle-x">Delete User</h1>
+</div><br><br>
+<div class="ms-4">
+<form [formGroup]="dataForm" (ngSubmit)="onSubmit()" >
+    <mat-form-field class="example-full-width w-25">
+        <mat-label>Id</mat-label>
+        <input matInput placeholder="Ex. User" formControlName="id">
+    </mat-form-field><br>
+    <button type="submit" mat-flat-button color="accent">Delete</button>
+</form>
+</div>
