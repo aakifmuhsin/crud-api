@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CrudserviceService } from '../crudservice.service';
 
 interface Gender {
   value: string;
@@ -18,6 +19,8 @@ interface Status {
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+  user: any = {};
+
   gender: Gender[] = [
     { value: 'male', viewValue: 'Male' },
     { value: 'female', viewValue: 'Female' },
@@ -34,16 +37,18 @@ export class UpdateComponent implements OnInit {
 
   dataForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private route: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private route: Router, private crudservice: CrudserviceService) {
   }
 
   ngOnInit(): void {
+    this.user = this.crudservice.getUpdate();
+    //console.log(this.user.id)
     this.dataForm = this.fb.group({
-      id: ["", Validators.required],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      gender: ['', Validators.required],
-      status: ['', Validators.required],
+      id: [this.user.id, Validators.required],
+      name: [this.user.name, Validators.required],
+      email: [this.user.email, [Validators.required, Validators.email]],
+      gender: [this.user.gender, Validators.required],
+      status: [this.user.status, Validators.required],
     });
   }
 

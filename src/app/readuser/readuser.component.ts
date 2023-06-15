@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { CrudserviceService } from '../crudservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -21,7 +22,7 @@ export class ReaduserComponent implements AfterViewInit {
   perPage: number = 100;
   page!: number;
   dataForm!: FormGroup;
-  constructor(private http: HttpClient,private _liveAnnouncer: LiveAnnouncer, private router: Router) { }
+  constructor(private http: HttpClient,private _liveAnnouncer: LiveAnnouncer, private router: Router,private crudService: CrudserviceService) { }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     
@@ -39,23 +40,32 @@ export class ReaduserComponent implements AfterViewInit {
     this.router.navigate(['/edit', user.id]);
   }
 
-  deleteUser(user: User) {
-    const id = this.dataForm.value.id;
-    console.log(id);
-    this.http.delete('https://gorest.co.in/public/v2/users/' +
-      id + '?access-token=47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd').subscribe(
-        (response) => {
-          this.router.navigate(['userdata']);
-          console.log(response);
+  //Delete function
+  onDelete(id: number) {
+    if (confirm('Are you sure you want to delete?')) {
+      this.http.delete('https://gorest.co.in/public/v2/users/' +
+        id +
+        `?access-token=47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd`).subscribe(
+          (response) => {
+            // Show an alert message with the deleted user ID
+            alert(`The User ${id} is deleted successfully`);
 
-          // Handle the response from the API
-        },
-        (error) => {
-          console.error(error);
-          // Handle errors if any
-        }
-      );
+            //Reload the page to see the updates
+            window.location.reload();
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+    }
   }
+
+  //Update function
+  onUpdate(user: any) {
+    this.crudService.setUpdate(user);
+    this.router.navigate(['updatedata']);
+  }
+
   fetchUsers(page: number, perPage: number) {
     // const apiUrl1 = `https://reqres.in/api/users?page=${page}`
     const apiUrl = `https://gorest.co.in/public/v2/users?page=${page}&per_page=${perPage}&access-token=47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd`;
