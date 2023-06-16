@@ -5,7 +5,9 @@ import { UpdateComponent } from './update/update.component';
 import { DeleteComponent } from './delete/delete.component';
 import { ReaduserComponent } from './readuser/readuser.component';
 import { FilterComponent } from './filter/filter.component';
+
 const routes: Routes = [
+  { path: '', component: ReaduserComponent },
   { path: 'userdata', component: ReaduserComponent },
   { path: 'newuser', component: CreateComponent },
   { path: 'updatedata', component: UpdateComponent },
