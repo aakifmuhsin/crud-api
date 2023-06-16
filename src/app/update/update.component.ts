@@ -19,6 +19,8 @@ interface Status {
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
+  private apiUrl = 'https://gorest.co.in/public/v2/users';
+  private accessToken = '47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd';
   user: any = {};
 
   gender: Gender[] = [
@@ -59,14 +61,9 @@ export class UpdateComponent implements OnInit {
     if (idFormControl) {
       id = idFormControl.value;
     }
-    // console.log(formData);
-    // console.log(id!);
-
     // Remove the id control from the dataForm FormGroup
     this.dataForm.removeControl('id');
-    this.http.put('https://gorest.co.in/public/v2/users/' +
-      id! +
-      '?access-token=47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd', formData).subscribe(
+    this.http.put(`${this.apiUrl}` + id! +`?access-token=${this.accessToken}`, formData).subscribe(
         (response) => {
           this.route.navigate(['userdata']);
           console.log(response);

@@ -21,6 +21,8 @@ interface Status {
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
+  private apiUrl = 'https://gorest.co.in/public/v2/users';
+  private accessToken = '47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd';
   // Array of gender options
   gender: Gender[] = [
     { value: 'male', viewValue: 'Male' },
@@ -54,7 +56,7 @@ export class CreateComponent implements OnInit {
     // Get the form data
     const formData = this.dataForm.value;
     // Send a POST request to the API with the form data
-    this.http.post('https://gorest.co.in/public/v2/users?access-token=47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd', formData).subscribe(
+    this.http.post(`${this.apiUrl}?access-token=${this.accessToken}`, formData).subscribe(
       (response) => {
         // On success, navigate to the 'userdata' route
         this.route.navigate(['userdata']);
