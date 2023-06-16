@@ -63,7 +63,7 @@ export class UpdateComponent implements OnInit {
     }
     // Remove the id control from the dataForm FormGroup
     this.dataForm.removeControl('id');
-    this.http.put(`${this.apiUrl}` + id! +`?access-token=${this.accessToken}`, formData).subscribe(
+    this.http.put(`${this.apiUrl}/` + id! +`?access-token=${this.accessToken}`, formData).subscribe(
         (response) => {
           this.route.navigate(['userdata']);
           console.log(response);
