@@ -21,7 +21,7 @@ export class ReaduserComponent implements AfterViewInit {
   page!: number;
   dataForm!: FormGroup;
 
-  private apiUrl1 = 'https://gorest.co.in/public/v2/users';
+  private apiUrl = 'https://gorest.co.in/public/v2/users';
   private accessToken = '47156652da46377d7dd1396be3bbc59bbb0a79a61146b9ab0668f7c2a9a143dd';
 
   constructor(private http: HttpClient, private _liveAnnouncer: LiveAnnouncer, private router: Router, private crudService: CrudserviceService) { }
@@ -46,7 +46,7 @@ export class ReaduserComponent implements AfterViewInit {
   // Delete function
   onDelete(id: number) {
     if (confirm('Are you sure you want to delete?')) {
-      this.http.delete(`${this.apiUrl1}` + id + `?access-token=${this.accessToken}`).subscribe(
+      this.http.delete(`${this.apiUrl}/` + id + `?access-token=${this.accessToken}`).subscribe(
           (response) => {
             // Show an alert message with the deleted user ID
             alert(`The User ${id} is deleted successfully`);
@@ -69,7 +69,7 @@ export class ReaduserComponent implements AfterViewInit {
 
   // Add page and pagesize to change over the page using pagination
   fetchUsers(page: number, perPage: number) {
-    const apiUrl = `${this.apiUrl1}?page=${page}&per_page=${perPage}&access-token=${this.accessToken}`;
+    const apiUrl = `${this.apiUrl}?page=${page}&per_page=${perPage}&access-token=${this.accessToken}`;
     this.http.get<User[]>(apiUrl).subscribe(
       data => {
         this.dataSource.data = data;
